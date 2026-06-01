@@ -43,7 +43,6 @@ def _splitter(chunk_size: int = CHUNK_SIZE, overlap: int = CHUNK_OVERLAP):
 
 
 def extract_model_names() -> List[str]:
-    """Return locally available Ollama chat models."""
     try:
         client = ollama.Client(host=OLLAMA_HOST)
         models = client.list().get("models", [])
@@ -87,7 +86,6 @@ def _read_text(file: IO[bytes], filename: str, ext: str) -> List[Document]:
 
 
 def extract_documents(uploads) -> Tuple[List[Document], List[str]]:
-    """Parse uploaded Streamlit file objects into LangChain Documents."""
     all_docs: List[Document] = []
     file_names: List[str] = []
 
@@ -112,7 +110,6 @@ def extract_documents(uploads) -> Tuple[List[Document], List[str]]:
 
 
 def build_vector_store(documents: List[Document]) -> None:
-    """Chunk documents and persist a FAISS index to disk."""
     if not documents:
         raise ValueError("No documents provided.")
 
@@ -139,7 +136,6 @@ def _load_vector_store() -> FAISS:
 
 
 def clear_vector_store() -> None:
-    """Delete the FAISS index from disk."""
     import shutil
     if VECTOR_STORE_DIR.exists():
         shutil.rmtree(VECTOR_STORE_DIR)
@@ -165,7 +161,6 @@ ANSWER (cite sources inline):"""
 
 
 def answer_question(question: str, model: str = DEFAULT_CHAT_MODEL) -> str:
-    """Retrieve relevant chunks and generate a grounded answer."""
     store = _load_vector_store()
     results = store.similarity_search_with_score(question, k=RETRIEVAL_TOP_K)
 

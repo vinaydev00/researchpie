@@ -21,7 +21,6 @@ def _ensure_file() -> None:
 
 
 def load_history() -> List[dict]:
-    """Load all saved messages from disk."""
     try:
         _ensure_file()
         return json.loads(CHAT_HISTORY_PATH.read_text(encoding="utf-8"))
@@ -31,16 +30,13 @@ def load_history() -> List[dict]:
 
 
 def append_message(role: str, content: str) -> None:
-    """Append a single message to the persistent history."""
     try:
         history = load_history()
-        history.append(
-            {
-                "role": role,
-                "content": content,
-                "timestamp": datetime.utcnow().isoformat(),
-            }
-        )
+        history.append({
+            "role": role,
+            "content": content,
+            "timestamp": datetime.utcnow().isoformat(),
+        })
         CHAT_HISTORY_PATH.write_text(
             json.dumps(history, indent=2, ensure_ascii=False), encoding="utf-8"
         )
@@ -49,7 +45,6 @@ def append_message(role: str, content: str) -> None:
 
 
 def clear_history() -> None:
-    """Wipe the persistent chat history."""
     try:
         CHAT_HISTORY_PATH.write_text("[]", encoding="utf-8")
     except Exception as exc:
