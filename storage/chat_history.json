@@ -1,0 +1,12 @@
+[
+  {
+    "role": "user",
+    "content": "whats epipolar and 5 applciaitons",
+    "timestamp": "2026-06-04T08:09:42.954747"
+  },
+  {
+    "role": "assistant",
+    "content": "According to [2] Source: Epipolar.pdf, Page 6, an \"Epipole\" is a point on the image plane that corresponds to the projection of the camera's optical center onto the image plane.\n\nAs for applications, [5] Source: Epipolar.pdf, Page 7 mentions several:\n\n1. Stereo Vision\n2. Structure from Motion (SfM)\n3. Feature matching\n4. Visual Odometry\n5. 3D Reconstruction\n\n---\n**Sources consulted:**\n- `Epipolar.pdf` — page(s) 12, 20, 5, 6, 7",
+    "timestamp": "2026-06-04T08:10:14.584377"
+  }
+]
