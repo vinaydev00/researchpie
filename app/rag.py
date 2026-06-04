@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import time
 from pathlib import Path
 from typing import IO, List, Tuple
@@ -9,6 +10,7 @@ import ollama
 import pdfplumber
 from langchain.schema import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langsmith import traceable
 
 from app.config import (
     CHUNK_OVERLAP,
@@ -22,7 +24,6 @@ from app.config import (
 )
 
 logger = logging.getLogger(__name__)
-
 CHROMA_COLLECTION = "researchpie"
 
 
@@ -118,18 +119,13 @@ def extract_documents(uploads) -> Tuple[List[Document], List[str]]:
 def build_vector_store(documents: List[Document]) -> None:
     if not documents:
         raise ValueError("No documents provided.")
-
     splitter = _splitter()
     chunks = splitter.split_documents(documents)
     logger.info("Split into %d chunks", len(chunks))
-
     texts = [c.page_content for c in chunks]
     metadatas = [c.metadata for c in chunks]
     ids = [f"chunk_{i}" for i in range(len(chunks))]
-
-    logger.info("Building embeddings with Ollama...")
     embeddings = _embed(texts)
-
     client = _get_chroma_client()
     collection = _get_collection(client)
     collection.upsert(
@@ -166,17 +162,16 @@ QUESTION:
 ANSWER (cite sources inline):"""
 
 
+@traceable(name="ResearchPie RAG")
 def answer_question(question: str, model: str = DEFAULT_CHAT_MODEL) -> str:
     client = _get_chroma_client()
     collection = _get_collection(client)
-
     query_embedding = _embed([question])[0]
     results = collection.query(
         query_embeddings=[query_embedding],
         n_results=RETRIEVAL_TOP_K,
         include=["documents", "metadatas", "distances"],
     )
-
     docs = results["documents"][0]
     metadatas = results["metadatas"][0]
     distances = results["distances"][0]

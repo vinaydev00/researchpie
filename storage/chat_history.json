@@ -1,12 +1,12 @@
 [
   {
     "role": "user",
-    "content": "whats epipolar and 5 applciaitons",
-    "timestamp": "2026-06-04T08:09:42.954747"
+    "content": "what is segment",
+    "timestamp": "2026-06-04T08:40:50.763618"
   },
   {
     "role": "assistant",
-    "content": "According to [2] Source: Epipolar.pdf, Page 6, an \"Epipole\" is a point on the image plane that corresponds to the projection of the camera's optical center onto the image plane.\n\nAs for applications, [5] Source: Epipolar.pdf, Page 7 mentions several:\n\n1. Stereo Vision\n2. Structure from Motion (SfM)\n3. Feature matching\n4. Visual Odometry\n5. 3D Reconstruction\n\n---\n**Sources consulted:**\n- `Epipolar.pdf` — page(s) 12, 20, 5, 6, 7",
-    "timestamp": "2026-06-04T08:10:14.584377"
+    "content": "[Source: Region-Segment (1).pdf, Page 1]\nSegmentation can be viewed as a process that partitions an image R into n subregions R , R , 1 2 R , ...... R .3 n such that * Union of R i (for i = 0 to n) is equal to image R.\n\n---\n**Sources consulted:**\n- `Region-Segment (1).pdf` — page(s) 1, 2, 6, 7, 8",
+    "timestamp": "2026-06-04T08:41:36.843514"
   }
 ]
